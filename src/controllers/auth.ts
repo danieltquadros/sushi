@@ -27,6 +27,7 @@ export const signup: RequestHandler = async (req, res) => {
     lastName: safeData.data.lastName,
     email: safeData.data.email,
     password: hashPassword,
+    roles: safeData.data.roles,
   });
 
   // cria o token
