@@ -1,8 +1,9 @@
 import { RequestHandler } from 'express';
 import { signupSchema } from '../schemas/sigmup';
 import { createUser, findUserByEmail } from '../services/user';
-import { hash } from 'bcrypt-ts';
+import { compare, hash } from 'bcrypt-ts';
 import { createJWT } from '../utils/jwt';
+import { signInSchema } from '../schemas/signIn';
 
 export const signup: RequestHandler = async (req, res) => {
   // validar os dados recebidos
@@ -43,6 +44,40 @@ export const signup: RequestHandler = async (req, res) => {
       email: newUser.email,
       avatar: newUser.avatar,
       roles: newUser.roles,
+    },
+  });
+};
+
+export const signIn: RequestHandler = async (req, res) => {
+  // validar os dados recebidos
+  const safeData = signInSchema.safeParse(req.body);
+  if (!safeData.success) {
+    res.json({ error: safeData.error.flatten().fieldErrors });
+    return;
+  }
+
+  const user = await findUserByEmail(safeData.data.email);
+  if (!user) {
+    res.status(401).json({ error: 'E-mail e/ou senha inválidos.' });
+    return;
+  }
+
+  const verifyPass = await compare(safeData.data.password, user.password);
+  if (!verifyPass) {
+    res.status(401).json({ error: 'E-mail e/ou senha inválidos.' });
+    return;
+  }
+
+  const token = createJWT(user.id);
+
+  res.json({
+    token,
+    user: {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      avatar: user.avatar,
+      roles: user.roles,
     },
   });
 };
