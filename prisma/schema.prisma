@@ -31,10 +31,10 @@ model User {
 model Product {
   id          String              @id @default(uuid())
   name        String
-  description String
-  price       Float
-  imageUrl    String
-  stock       Int
+  description String?
+  price       Float?
+  imageUrl    String?
+  stock       Int?
   ingredients ProductIngredient[] // Relacionamento com a tabela intermediária
   cartItems   CartItem[]
   orders      OrderProduct[]
