@@ -4,7 +4,8 @@
   "description": "sushi-store",
   "main": "index.js",
   "scripts": {
-    "dev": "node --import=tsx --watch --env-file=.env ./src/server.ts"
+    "dev": "node --import=tsx --watch --env-file=.env ./src/server.ts",
+    "start": "node --import=tsx ./src/server.ts"
   },
   "repository": {
     "type": "git",
