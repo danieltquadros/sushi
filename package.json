@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node --import=tsx --watch --env-file=.env ./src/server.ts",
     "build": "tsc",
-    "start": "node --import=tsx `--omit=dev` ./dist/server.js"
+    "start": "node --import=tsx ./dist/server.js"
   },
   "repository": {
     "type": "git",
