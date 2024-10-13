@@ -11,8 +11,6 @@ server.use(express.json());
 
 server.use(mainRouter);
 
-server.listen(process.env.PORT || 8080, () => {
-  console.log(
-    `Server running at ${process.env.BASE_URL} port: ${process.env.PORT}`,
-  );
+server.listen(8080, () => {
+  console.log(`Server running at ${process.env.BASE_URL} port: ${8080}`);
 });
